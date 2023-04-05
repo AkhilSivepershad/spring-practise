@@ -1,7 +1,7 @@
-CREATE TABLE sensitiveWords(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    sensitiveWord VARCHAR(50) NOT NULL
+CREATE TABLE SensitiveWord(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    word VARCHAR(50) NOT NULL
 );
 
-INSERT INTO sensitiveWords (sensitiveWord) VALUES
+INSERT INTO SensitiveWord (word) VALUES
 ('SELECT'),('INSERT'),('DROP'),('FROM');
