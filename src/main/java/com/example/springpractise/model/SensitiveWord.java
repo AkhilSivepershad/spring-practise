@@ -24,4 +24,9 @@ public class SensitiveWord {
         this.word=word;
         this.createTime=new Timestamp(System.currentTimeMillis());
     }
+
+    public void setWord(String word) {
+        this.word = word;
+        this.createTime=new Timestamp(System.currentTimeMillis());
+    }
 }
