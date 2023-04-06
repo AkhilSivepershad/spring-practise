@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import lombok.*;
 
+import java.sql.Timestamp;
+
 @Entity
 @Getter
 @Setter
@@ -15,9 +17,11 @@ public class SensitiveWord {
     private Integer id;
     //@Final
     private String word;
+    private Timestamp createTime;
 
     protected SensitiveWord(){}
     public SensitiveWord(String word){
         this.word=word;
+        this.createTime=new Timestamp(System.currentTimeMillis());
     }
 }
