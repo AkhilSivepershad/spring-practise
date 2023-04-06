@@ -1,6 +1,6 @@
 CREATE TABLE SensitiveWord(
     id int AUTO_INCREMENT PRIMARY KEY,
-    word VARCHAR(50) NOT NULL,
+    word VARCHAR(50) NOT NULL UNIQUE,
     createTime DATETIME NOT NULL
 );
 

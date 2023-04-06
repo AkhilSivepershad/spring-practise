@@ -5,9 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SensitiveWordRepository extends CrudRepository<SensitiveWord, Long> {
-    List<SensitiveWord> findByWord(String word);
-
+    Optional<SensitiveWord> findByWord(String word);
 }

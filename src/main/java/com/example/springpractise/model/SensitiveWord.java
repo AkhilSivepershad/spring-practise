@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @ToString
-//@NoArgsConstructor
+@NoArgsConstructor
 public class SensitiveWord {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -18,8 +18,6 @@ public class SensitiveWord {
     //@Final
     private String word;
     private Timestamp createTime;
-
-    protected SensitiveWord(){}
     public SensitiveWord(String word){
         this.word=word;
         this.createTime=new Timestamp(System.currentTimeMillis());
