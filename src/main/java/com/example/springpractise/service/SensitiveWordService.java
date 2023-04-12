@@ -40,11 +40,8 @@ public class SensitiveWordService {
     public SensitiveWord getByWord(String word) {
         return sensitiveWordRepository.findByWord(word).orElseThrow(EntityNotFoundException::new);
     }
-    public Optional<Set<SensitiveWord>> getByListOfWords(Set<String> words) {
-        return sensitiveWordRepository.findAllByWordIn(words);
-    }
-    public void deleteSensitiveWord(SensitiveWord sensitiveWordToDelete){
-        sensitiveWordRepository.delete(sensitiveWordToDelete);
+    public Set<SensitiveWord> getByListOfWords(Set<String> words) {
+        return sensitiveWordRepository.findAllByWordIn(words).orElseThrow(EntityNotFoundException::new);
     }
     public void deleteSensitiveWord(String word){
         try{

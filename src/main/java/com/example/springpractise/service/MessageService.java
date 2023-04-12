@@ -3,6 +3,7 @@ package com.example.springpractise.service;
 import com.example.springpractise.model.SensitiveWord;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.*;
 
 @Service
@@ -23,25 +24,27 @@ public class MessageService {
             messageList.add(currentWord);
         }
 
-        Optional<Set<SensitiveWord>> optionalUniqueSensitiveWordsSet=sensitiveWordService.getByListOfWords(uniqueWordsSet);
-        if(optionalUniqueSensitiveWordsSet.isPresent()){
-            outputString="";
-            Set<SensitiveWord> uniqueSensitiveWordsSet=optionalUniqueSensitiveWordsSet.get();
-            for (String word : messageList) {
-                boolean found=false;
-                for (SensitiveWord sensitiveWord : uniqueSensitiveWordsSet) {
-                    if (word.equals(sensitiveWord.getWord())) {
-                        found = true;
-                        break;
-                    }
-                }
-                if(found)
-                    outputString+=makeStars(word);
-                else
-                    outputString+=" "+word;
-            }
-        }
+        Set<SensitiveWord> uniqueSensitiveWordsSet;
+        try{
+            uniqueSensitiveWordsSet=sensitiveWordService.getByListOfWords(uniqueWordsSet);
+        }catch (EntityNotFoundException E){
             return outputString;
+        }
+        outputString="";
+        for (String word : messageList) {
+            boolean found=false;
+            for (SensitiveWord sensitiveWord : uniqueSensitiveWordsSet) {
+                if (word.equals(sensitiveWord.getWord())) {
+                    found = true;
+                    break;
+                }
+            }
+            if(found)
+                outputString+=makeStars(word);
+            else
+                outputString+=" "+word;
+        }
+        return outputString;
     }
     private String makeStars(String word){
         String outputString = " ";
