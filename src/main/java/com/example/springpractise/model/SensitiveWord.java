@@ -15,7 +15,7 @@ public class SensitiveWord {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    //@Final
+    @Column(unique=true)
     private String word;
     private Timestamp createTime;
     public SensitiveWord(String word){
