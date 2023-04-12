@@ -2,8 +2,8 @@ package com.example.springpractise.service;
 
 import com.example.springpractise.model.SensitiveWord;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
-import java.util.StringTokenizer;
+
+import java.util.*;
 
 @Service
 public class MessageService {
@@ -12,19 +12,36 @@ public class MessageService {
         this.sensitiveWordService=sensitiveWordService;
     }
     public String processMessage(String message){
+        String outputString=message;
         StringTokenizer tokenizer = new StringTokenizer(message);
-        String outputString="";
+        List<String> messageList= new ArrayList<>();
+        Set<String> uniqueWordsSet= new HashSet<>();
+
         while (tokenizer.hasMoreTokens()) {
             String currentWord = tokenizer.nextToken();
-            Optional<SensitiveWord> sensitiveWord= sensitiveWordService.getByWord(currentWord);
-            if (sensitiveWord.isPresent()){
-                outputString+=makeStars(currentWord);
-            }
-            else{
-                outputString+=" "+currentWord;
+            uniqueWordsSet.add(currentWord);
+            messageList.add(currentWord);
+        }
+
+        Optional<Set<SensitiveWord>> optionalUniqueSensitiveWordsSet=sensitiveWordService.getByListOfWords(uniqueWordsSet);
+        if(optionalUniqueSensitiveWordsSet.isPresent()){
+            outputString="";
+            Set<SensitiveWord> uniqueSensitiveWordsSet=optionalUniqueSensitiveWordsSet.get();
+            for (String word : messageList) {
+                boolean found=false;
+                for (SensitiveWord sensitiveWord : uniqueSensitiveWordsSet) {
+                    if (word.equals(sensitiveWord.getWord())) {
+                        found = true;
+                        break;
+                    }
+                }
+                if(found)
+                    outputString+=makeStars(word);
+                else
+                    outputString+=" "+word;
             }
         }
-        return outputString;
+            return outputString;
     }
     private String makeStars(String word){
         String outputString = " ";

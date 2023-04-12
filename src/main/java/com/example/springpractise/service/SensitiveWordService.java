@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class SensitiveWordService {
@@ -16,13 +17,7 @@ public class SensitiveWordService {
     }
 
     public SensitiveWord  createSensitiveWord(String newWord){
-        Optional<SensitiveWord> check= getByWord(newWord);
-        if(check.isPresent()){
-            return check.get();
-        }
-        else{
-            return sensitiveWordRepository.save(new SensitiveWord(newWord));
-        }
+        return getByWord(newWord).orElseGet(() -> sensitiveWordRepository.save(new SensitiveWord(newWord)));
     }
 
     public List<SensitiveWord> getSensitiveWords() {
@@ -35,11 +30,9 @@ public class SensitiveWordService {
     public Optional<SensitiveWord> getByWord(String word) {
         return sensitiveWordRepository.findByWord(word);
     }
-
-    public SensitiveWord updateSensitiveWord(SensitiveWord newSensitiveWord){
-        return sensitiveWordRepository.save(newSensitiveWord);
+    public Optional<Set<SensitiveWord>> getByListOfWords(Set<String> words) {
+        return sensitiveWordRepository.findAllByWordIn(words);
     }
-
     public void deleteSensitiveWord(SensitiveWord sensitiveWordToDelete){
         sensitiveWordRepository.delete(sensitiveWordToDelete);
     }

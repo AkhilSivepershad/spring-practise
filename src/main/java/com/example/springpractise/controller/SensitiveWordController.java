@@ -28,12 +28,10 @@ public class SensitiveWordController {
     }
 
     @GetMapping("{word}")
-    public ResponseEntity<?> getSensitiveWords(@PathVariable String word) {
-        Optional<SensitiveWord> sensitiveWord = this.sensitiveWordService.getByWord(word);
-        if (sensitiveWord.isPresent()) {
-            return new ResponseEntity<>(sensitiveWord, HttpStatus.FOUND);
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getSensitiveWord(@PathVariable String word) {
+        return this.sensitiveWordService.getByWord(word)
+                .map(sensitiveWord -> new ResponseEntity<>(sensitiveWord, HttpStatus.FOUND))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("create")
@@ -41,16 +39,10 @@ public class SensitiveWordController {
         final SensitiveWord savedSensitiveWord = sensitiveWordService.createSensitiveWord(word);
         return new ResponseEntity<>(savedSensitiveWord, HttpStatus.CREATED);
     }
-    @PostMapping("delete")
+
+    @DeleteMapping("delete")
     public ResponseEntity<?> deleteSensitiveWord(@RequestBody SensitiveWord sensitiveWord) {
         sensitiveWordService.deleteSensitiveWord(sensitiveWord);
         return new ResponseEntity<>( HttpStatus.OK);
     }
-
-    @PostMapping("update")
-    public ResponseEntity<?> createSensitiveWord(@RequestBody SensitiveWord sensitiveWord) {
-        final SensitiveWord savedSensitiveWord = sensitiveWordService.updateSensitiveWord(sensitiveWord);
-        return new ResponseEntity<>(savedSensitiveWord, HttpStatus.OK);
-    }
-
 }
