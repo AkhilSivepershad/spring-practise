@@ -2,6 +2,7 @@ package com.example.springpractise.service;
 
 import com.example.springpractise.model.SensitiveWord;
 import com.example.springpractise.repository.SensitiveWordRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -24,22 +25,18 @@ public class SensitiveWordService {
             throw new IllegalArgumentException();
         }
     }
-
+    @Cacheable("all_words")
     public List<SensitiveWord> getSensitiveWords() {
         Iterable<SensitiveWord> sensitiveWordIterable = sensitiveWordRepository.findAll();
         List<SensitiveWord> result = new ArrayList<>();
         sensitiveWordIterable.forEach(result::add);
-
-        if(result.size()>0){
-            return result;
-        }
-        else{
-            throw new EntityNotFoundException();
-        }
+        return result;
     }
+    @Cacheable("word")
     public SensitiveWord getByWord(String word) {
         return sensitiveWordRepository.findByWord(word).orElseThrow(EntityNotFoundException::new);
     }
+    @Cacheable("list_words")
     public Set<SensitiveWord> getByListOfWords(Set<String> words) {
         return sensitiveWordRepository.findAllByWordIn(words).orElseThrow(EntityNotFoundException::new);
     }
