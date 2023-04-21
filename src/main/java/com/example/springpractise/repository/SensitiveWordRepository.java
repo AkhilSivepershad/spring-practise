@@ -10,6 +10,7 @@ import java.util.Set;
 
 @Repository
 public interface SensitiveWordRepository extends CrudRepository<SensitiveWord, Long> {
-    Optional<SensitiveWord> findByWord(String word);
-    Optional<Set<SensitiveWord>> findAllByWordIn(Set<String> words);
+    Optional<SensitiveWord> findByWordIgnoreCase(String word);
+
+    Optional<Set<SensitiveWord>> findAllByWordIgnoreCaseIn(Set<String> words);
 }

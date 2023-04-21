@@ -9,14 +9,16 @@ import java.util.*;
 @Service
 public class MessageService {
     private final SensitiveWordService sensitiveWordService;
-    public MessageService(SensitiveWordService sensitiveWordService ){
-        this.sensitiveWordService=sensitiveWordService;
+
+    public MessageService(SensitiveWordService sensitiveWordService) {
+        this.sensitiveWordService = sensitiveWordService;
     }
-    public String processMessage(String message){
-        String outputString=message;
+
+    public String processMessage(String message) {
+        String outputString = message;
         StringTokenizer tokenizer = new StringTokenizer(message);
-        List<String> messageList= new ArrayList<>();
-        Set<String> uniqueWordsSet= new HashSet<>();
+        List<String> messageList = new ArrayList<>();
+        Set<String> uniqueWordsSet = new HashSet<>();
 
         while (tokenizer.hasMoreTokens()) {
             String currentWord = tokenizer.nextToken();
@@ -25,31 +27,32 @@ public class MessageService {
         }
 
         Set<SensitiveWord> uniqueSensitiveWordsSet;
-        try{
-            uniqueSensitiveWordsSet=sensitiveWordService.getByListOfWords(uniqueWordsSet);
-        }catch (EntityNotFoundException E){
+        try {
+            uniqueSensitiveWordsSet = sensitiveWordService.getByListOfWords(uniqueWordsSet);
+        } catch (EntityNotFoundException E) {
             return outputString;
         }
-        outputString="";
+        outputString = "";
         for (String word : messageList) {
-            boolean found=false;
+            boolean found = false;
             for (SensitiveWord sensitiveWord : uniqueSensitiveWordsSet) {
-                if (word.equals(sensitiveWord.getWord())) {
+                if (word.equalsIgnoreCase(sensitiveWord.getWord())) {
                     found = true;
                     break;
                 }
             }
-            if(found)
-                outputString+=makeStars(word);
+            if (found)
+                outputString += makeStars(word);
             else
-                outputString+=" "+word;
+                outputString += " " + word;
         }
         return outputString;
     }
-    private String makeStars(String word){
+
+    private String makeStars(String word) {
         String outputString = " ";
-        for (int i=0;i<word.length();i++){
-            outputString+="*";
+        for (int i = 0; i < word.length(); i++) {
+            outputString += "*";
         }
         return outputString;
     }

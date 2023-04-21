@@ -14,18 +14,19 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class SensitiveWord {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique=true)
+    @Column(unique = true)
     private String word;
     private Timestamp create_time;
-    public SensitiveWord(String word){
-        this.word=word;
-        this.create_time =new Timestamp(System.currentTimeMillis());
+
+    public SensitiveWord(String word) {
+        this.word = word;
+        this.create_time = new Timestamp(System.currentTimeMillis());
     }
 
     public void setWord(String word) {
         this.word = word;
-        this.create_time =new Timestamp(System.currentTimeMillis());
+        this.create_time = new Timestamp(System.currentTimeMillis());
     }
 }

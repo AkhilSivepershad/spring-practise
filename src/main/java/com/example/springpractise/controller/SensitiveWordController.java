@@ -12,15 +12,17 @@ import java.util.function.Supplier;
 @RequestMapping("sensitiveWords")
 public class SensitiveWordController {
     private final SensitiveWordService sensitiveWordService;
+
     public SensitiveWordController(SensitiveWordService sensitiveWordService) {
         this.sensitiveWordService = sensitiveWordService;
     }
+
     private ResponseEntity<?> handleResponse(Supplier<Object> serviceCall) {
         try {
             Object result = serviceCall.get();
             return new ResponseEntity<>(result, HttpStatus.FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>("Word does not exist",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Word does not exist", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -36,22 +38,20 @@ public class SensitiveWordController {
 
     @PostMapping("create")
     public ResponseEntity<?> createSensitiveWord(@RequestBody String word) {
-        try{
+        try {
             return new ResponseEntity<>(sensitiveWordService.createSensitiveWord(word), HttpStatus.CREATED);
-        }
-        catch (IllegalArgumentException E){
-            return new ResponseEntity<>("Word already exists",HttpStatus.BAD_REQUEST);
+        } catch (IllegalArgumentException E) {
+            return new ResponseEntity<>("Word already exists", HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("delete")
     public ResponseEntity<?> deleteSensitiveWord(@RequestBody String word) {
-        try{
+        try {
             sensitiveWordService.deleteSensitiveWord(word);
             return new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch (EntityNotFoundException E){
-            return new ResponseEntity<>("Word does not exist",HttpStatus.NOT_FOUND);
+        } catch (EntityNotFoundException E) {
+            return new ResponseEntity<>("Word does not exist", HttpStatus.NOT_FOUND);
         }
 //        return handleResponse(() -> sensitiveWordService.deleteSensitiveWord(word));
     }
