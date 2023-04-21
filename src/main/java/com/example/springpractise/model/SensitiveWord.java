@@ -1,6 +1,7 @@
 package com.example.springpractise.model;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 
 import lombok.*;
 
@@ -17,14 +18,14 @@ public class SensitiveWord {
     private Integer id;
     @Column(unique=true)
     private String word;
-    private Timestamp createTime;
+    private Timestamp create_time;
     public SensitiveWord(String word){
         this.word=word;
-        this.createTime=new Timestamp(System.currentTimeMillis());
+        this.create_time =new Timestamp(System.currentTimeMillis());
     }
 
     public void setWord(String word) {
         this.word = word;
-        this.createTime=new Timestamp(System.currentTimeMillis());
+        this.create_time =new Timestamp(System.currentTimeMillis());
     }
 }
