@@ -23,7 +23,7 @@ public class SensitiveWordService {
     public SensitiveWord createSensitiveWord(String newWord) {
         newWord=newWord.trim();
         try {
-            SensitiveWord existingWord= getByWord(newWord);
+            //SensitiveWord existingWord= getByWord(newWord);
             return sensitiveWordRepository.save(new SensitiveWord(newWord));
         } catch (Exception E) {
             throw new IllegalArgumentException();
