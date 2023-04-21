@@ -16,4 +16,5 @@ spring:
     username: postgres
     password: sa
 
-
+  swagger:
+    enable: true
