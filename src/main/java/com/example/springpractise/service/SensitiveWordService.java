@@ -45,7 +45,7 @@ public class SensitiveWordService {
 
     @Cacheable("list_words")
     public Set<SensitiveWord> getByListOfWords(Set<String> words) {
-        return sensitiveWordRepository.findAllByWordIgnoreCaseIn(words).orElseThrow(EntityNotFoundException::new);
+        return sensitiveWordRepository.findAllByWordIgnoreCaseIn(words);
     }
 
     @CacheEvict(value = {"all_words", "word", "list_words"}, allEntries = true, beforeInvocation = true)

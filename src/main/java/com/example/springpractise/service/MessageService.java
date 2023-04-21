@@ -26,12 +26,11 @@ public class MessageService {
             messageList.add(currentWord);
         }
 
-        Set<SensitiveWord> uniqueSensitiveWordsSet;
-        try {
-            uniqueSensitiveWordsSet = sensitiveWordService.getByListOfWords(uniqueWordsSet);
-        } catch (EntityNotFoundException E) {
+        Set<SensitiveWord> uniqueSensitiveWordsSet = sensitiveWordService.getByListOfWords(uniqueWordsSet);
+        if (uniqueSensitiveWordsSet.isEmpty()) {
             return outputString;
         }
+
         outputString = "";
         for (String word : messageList) {
             boolean found = false;

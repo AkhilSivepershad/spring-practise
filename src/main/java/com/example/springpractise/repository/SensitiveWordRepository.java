@@ -12,5 +12,5 @@ import java.util.Set;
 public interface SensitiveWordRepository extends CrudRepository<SensitiveWord, Long> {
     Optional<SensitiveWord> findByWordIgnoreCase(String word);
 
-    Optional<Set<SensitiveWord>> findAllByWordIgnoreCaseIn(Set<String> words);
+    Set<SensitiveWord> findAllByWordIgnoreCaseIn(Set<String> words);
 }
