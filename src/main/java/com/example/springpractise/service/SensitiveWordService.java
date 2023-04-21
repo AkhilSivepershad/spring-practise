@@ -2,6 +2,7 @@ package com.example.springpractise.service;
 
 import com.example.springpractise.model.SensitiveWord;
 import com.example.springpractise.repository.SensitiveWordRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,10 @@ public class SensitiveWordService {
     public SensitiveWordService(SensitiveWordRepository sensitiveWordRepository){
         this.sensitiveWordRepository=sensitiveWordRepository;
     }
-
+    @CacheEvict(value = {"all_words", "word","list_words"}, allEntries = true, beforeInvocation = true)
     public SensitiveWord  createSensitiveWord(String newWord){
         try {
-           return sensitiveWordRepository.save(new SensitiveWord(newWord));
+            return sensitiveWordRepository.save(new SensitiveWord(newWord));
         }catch (Exception E){
             throw new IllegalArgumentException();
         }
@@ -40,6 +41,7 @@ public class SensitiveWordService {
     public Set<SensitiveWord> getByListOfWords(Set<String> words) {
         return sensitiveWordRepository.findAllByWordIn(words).orElseThrow(EntityNotFoundException::new);
     }
+    @CacheEvict(value = {"all_words", "word","list_words"}, allEntries = true, beforeInvocation = true)
     public void deleteSensitiveWord(String word){
         try{
             SensitiveWord sensitiveWordToDelete= getByWord(word);
