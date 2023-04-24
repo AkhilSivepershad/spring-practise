@@ -18,3 +18,10 @@ spring:
 
   swagger:
     enable: true
+
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+    packages:
+      trust-all: true
