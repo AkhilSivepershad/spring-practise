@@ -2,7 +2,7 @@ package com.example.springpractise.model;
 
 import java.io.Serializable;
 
-public class Message implements Serializable {
+public class MessageModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,8 +27,8 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" +
-                "id='" + id + '\'' +
+        return "SystemMessage{" +
+                "source='" + id + '\'' +
                 ", message='" + message + '\'' +
                 '}';
     }
