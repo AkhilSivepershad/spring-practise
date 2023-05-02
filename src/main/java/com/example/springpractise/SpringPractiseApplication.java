@@ -3,6 +3,7 @@ package com.example.springpractise;
 import com.example.springpractise.model.SensitiveWord;
 import com.example.springpractise.repository.SensitiveWordRepository;
 import com.example.springpractise.service.SensitiveWordService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,14 +12,17 @@ import org.springframework.context.annotation.Bean;
 @EnableCaching
 @SpringBootApplication
 public class SpringPractiseApplication {
-
+	//@Value("${spring.activemq.broker-url}")
+	@Value("${SPRING_activemq_broker_url")
+	private static String url;
 	public static void main(String[] args) {
 		SpringApplication.run(SpringPractiseApplication.class, args);
-
 	}
 	@Bean
 	public CommandLineRunner demo(SensitiveWordService service) {
 		return (args) -> {
+			System.out.println(url+"-------------------------------------------------------------------------");
+
 //			System.out.println();
 //			service.createSensitiveWord(new SensitiveWord("LOOP"));
 //
